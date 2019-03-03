@@ -83,6 +83,15 @@ version of ES without losing data?
 By default AWS ElasticSearch requires any requests to it to be signed by an IAM credential that has the correct authorization.
 I still need to figure out how would this actually work in practice with Logstash/Beats.
 
+## TODO
+
+My own little todolist before I sign off on this task:
+
+1. Fix Alerting
+2. Modularize it. Either one big module or separate for cluster, dashboard and alerts.
+3. Versioning (just git flow)
+4. Documentation / Writing down what I would do further work on.
+
 ## Sources
 
 VPC ES setup
