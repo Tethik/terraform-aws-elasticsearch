@@ -1,5 +1,7 @@
 # terraform-aws-elasticsearch
 
+![version 0.1.0](version.svg)
+
 This is a terraform module to easily provision an AWS ElasticSearch domain inside a VPC for smaller clusters. It is structured into
 three separate modules.
 
@@ -9,9 +11,12 @@ three separate modules.
 
 ## Usage
 
-```
+Here's some code by example, just fill in the gaps.
+
+```t
 module "aws-elasticsearch" {
-  source = "./aws-elasticsearch"
+  # Replace the version number at the end to use a newer (or older) version of the module.
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.0"
 
   domain     = "" # The domain name of the ES cluster
   vpc_id     = "" # The VPC to run the ES cluster inside. This will limit the access to only hosts inside that VPC.
@@ -23,13 +28,13 @@ module "aws-elasticsearch" {
 }
 
 module "aws-elasticsearch-cloudwatch-dashboard" {
-  source = "./aws-elasticsearch-cloudwatch-dashboard"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.0"
 
   domain = "" # The domain name of the ES cluster. Use the same as above.
 }
 
 module "aws-elasticsearch-cloudwatch-sns-alerting" {
-  source = "./aws-elasticsearch-cloudwatch-sns-alerting"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.0"
 
   domain       = "" # The domain name of the ES cluster. Use the same as above.
   alarms_email = "" # The email to send alarms to
@@ -81,7 +86,7 @@ Otherwise you might want to also ship the raw logs somewhere, e.g. S3. Not sure 
 ### Version Upgrades
 
 Not sure how upgrades would work, but there should be a strategy and it should be tested. i.e. How do you upgrade to a newer
-version of ES without losing data?
+version of ES without losing data? For now I've set up some basic versioning on the project using [git flow](https://github.com/nvie/gitflow). I would maintain it using [semantic versioning](https://semver.org/) to organize the version numbers and communicate breaking changes.
 
 ### Request Signing
 

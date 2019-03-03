@@ -4,7 +4,9 @@ variable "domain" {
 }
 
 module "aws-elasticsearch" {
-  source = "./aws-elasticsearch"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.0"
+
+  #   source = "./aws-elasticsearch"
 
   domain     = "${var.domain}"
   vpc_id     = "vpc-6071d40b"
@@ -12,13 +14,17 @@ module "aws-elasticsearch" {
 }
 
 module "aws-elasticsearch-cloudwatch-dashboard" {
-  source = "./aws-elasticsearch-cloudwatch-dashboard"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.0"
+
+  #   source = "./aws-elasticsearch-cloudwatch-dashboard"
 
   domain = "${var.domain}"
 }
 
 module "aws-elasticsearch-cloudwatch-sns-alerting" {
-  source = "./aws-elasticsearch-cloudwatch-sns-alerting"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.0"
+
+  #   source = "./aws-elasticsearch-cloudwatch-sns-alerting"
 
   domain       = "${var.domain}"
   alarms_email = "tethik@blacknode.se"
