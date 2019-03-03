@@ -1,52 +1,73 @@
 # terraform-aws-elasticsearch
 
-## Testing
+This is a terraform module to easily provision an AWS ElasticSearch domain inside a VPC for smaller clusters. It is structured into
+three separate modules.
 
-The AWS documentation describes a good way to test that the cluster works from inside the VPC.
-https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#kibana-test
+- `aws-elasticsearch` is the main module which provisions the elasticsearch domain inside your VPC. This is the basic requirement.
+- `aws-elasticsearch-cloudwatch-dashboard` which adds a simple CloudWatch dashboard to your elasticsearch domain.
+- `aws-elasticsearch-cloudwatch-sns-alerting` which adds a single alarm to send an email if your elasticsearch domain status is no longer green. **Currently this does not work though :(**
 
-Set the access policy to allow for anything coming from AWS (inside the VPC):
+## Usage
 
-```tf
-resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
-  domain_name = "${aws_elasticsearch_domain.main.domain_name}"
+```
+module "aws-elasticsearch" {
+  source = "./aws-elasticsearch"
 
-  access_policies = <<POLICIES
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "es:*",
-            "Principal":  {
-              "AWS": "*",
-            }
-            "Effect": "Allow",
-            "Resource": "${aws_elasticsearch_domain.main.arn}/*"
-        }
-    ]
+  domain     = "" # The domain name of the ES cluster
+  vpc_id     = "" # The VPC to run the ES cluster inside. This will limit the access to only hosts inside that VPC.
+  subnet_ids = [""] # The subnet(s) inside the VPC to place the cluster in.
+  elasticsearch_version = "" # Defaults to 6.4
+  elasticsearch_instance_type = "" # Defaults to t2.small.elasticsearch
+  elasticsearch_instance_count = "" # Defaults to 1
+  elasticsearch_volume_size = "" # Size in GB of the disk allocated to the ES Instance(s). Defaults to 10GB
 }
-POLICIES
+
+module "aws-elasticsearch-cloudwatch-dashboard" {
+  source = "./aws-elasticsearch-cloudwatch-dashboard"
+
+  domain = "" # The domain name of the ES cluster. Use the same as above.
+}
+
+module "aws-elasticsearch-cloudwatch-sns-alerting" {
+  source = "./aws-elasticsearch-cloudwatch-sns-alerting"
+
+  domain       = "" # The domain name of the ES cluster. Use the same as above.
+  alarms_email = "" # The email to send alarms to
 }
 ```
 
-Use an instance inside the VPC as a proxy. E.g.
+## Testing
+
+In the top level of this repository I have provided a `sample.tf` file which showcases how to use these modules.
+Simply `terraform plan/apply` with your AWS credentials to try it out.
+
+By default the sample it will set the access policy to allow for anything coming from AWS (inside the VPC).
+
+Use an EC2 instance inside the VPC as a proxy, using SSH to tunnel the connection. E.g.
 
 ```
 ssh <user@ip> -N -L 9200:vpc-example-n2mczfaqfo25w65nd4afx23yim.eu-central-1.es.amazonaws.com:443
 ```
+
+Now you should be able to access the cluster on `https://localhost:9200` and kibana on `https://localhost:9200/_plugin/kibana`
 
 ## Monitoring
 
 Included is a CloudWatch dashboard with some minimal stats displayed. You'll find it on your AWS account under `CloudWatch -> Dashboards`.
 ![A nice picture of the dashboard](./dashboard.png)
 
-By default the AWS ES domains publish metrics to CloudWatch. These can then be used elsewhere too.
+By default the AWS ES domains already publish metrics to CloudWatch. These can then be used elsewhere too.
 https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains.html#es-managedomains-cloudwatchmetrics
 
 ## Further Improvements
 
 These are some improvements I would make before considering this module production ready. In the interest of time
 I won't delve too much into them, but I want to note them down to show my awareness of the problems that exist.
+
+## Scaling
+
+I did not test anything besides the very smallest instance size to save costs. Not sure how this would work for larger clusters.
+There's a lot of configuration available that you may want to enable if you need to run a larger cluster that I do not expose here (e.g. master nodes?).
 
 ### Longer term storage
 
@@ -77,14 +98,17 @@ this, or asking someone more knowledgeable on hosting ES clusters as to what is 
 
 This is code after all. We could code tests for it to e.g. try connecting to the cluster and logging some data, or ensuring that the cloudwatch alarm works. This would be helpful during development.
 
+### Multiple Subnets
+
+I don't think it currently works to give the module multiple subnets. It would have been nice to only specify the VPC. This might
+have to do with the fact that I only run a single instance though. Maybe if I ran more AWS would be smart enough to distribute them
+accross the different subnets.
+
 ## TODO
 
 My own little todolist before I sign off on this task:
 
 1. Fix Alerting
-2. Modularize it. Either one big module or separate for cluster, dashboard and alerts.
-3. Versioning (just git flow)
-4. Documentation / Writing down what I would do further work on.
 
 ## Sources / References
 
