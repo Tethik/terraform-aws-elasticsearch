@@ -83,6 +83,12 @@ version of ES without losing data?
 By default AWS ElasticSearch requires any requests to it to be signed by an IAM credential that has the correct authorization.
 I still need to figure out how would this actually work in practice with Logstash/Beats.
 
+### Better dashboard/alarms based on ES Domain Knowledge
+
+I don't have much experience using ES long term, and most of my experience has been as a developer. I don't know
+which metrics are important to keep track of. Therefore I would have liked to invest more time into reading up on
+this, or asking someone more knowledgeable on hosting ES clusters as to what is important to keep track of.
+
 ## TODO
 
 My own little todolist before I sign off on this task:
@@ -92,7 +98,7 @@ My own little todolist before I sign off on this task:
 3. Versioning (just git flow)
 4. Documentation / Writing down what I would do further work on.
 
-## Sources
+## Sources / References
 
 VPC ES setup
 https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#es-prerequisites-vpc-endpoints
@@ -100,5 +106,5 @@ https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.h
 ES CloudWatch
 https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains.html#es-managedomains-cloudwatchmetrics
 
-Alerting + Monitoring
+Alerting + Monitoring example, especially helpful for the email part.
 https://stephenmann.io/post/setting-up-monitoring-and-alerting-on-amazon-aws-with-terraform/

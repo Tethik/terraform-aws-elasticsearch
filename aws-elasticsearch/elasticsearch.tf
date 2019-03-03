@@ -4,10 +4,6 @@ data "aws_vpc" "selected" {
 
 data "aws_subnet_ids" "selected" {
   vpc_id = "${var.vpc_id}"
-
-  # tags {
-  #   Tier = "private"
-  # }
 }
 
 # This security group controls IP-based access.
@@ -57,6 +53,7 @@ resource "aws_elasticsearch_domain" "main" {
   ]
 }
 
+# TODO: move this out of the module.
 resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
   domain_name = "${aws_elasticsearch_domain.main.domain_name}"
 
