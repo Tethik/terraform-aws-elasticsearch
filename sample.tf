@@ -1,6 +1,17 @@
 variable "domain" {
-  type    = "string"
-  default = "example"
+  type = "string"
+}
+
+variable "vpc_id" {
+  type = "string"
+}
+
+variable "subnet_id" {
+  type = "string"
+}
+
+variable "alarms_email" {
+  type = "string"
 }
 
 module "aws-elasticsearch" {
@@ -9,8 +20,8 @@ module "aws-elasticsearch" {
   #   source = "./aws-elasticsearch"
 
   domain     = "${var.domain}"
-  vpc_id     = "vpc-6071d40b"
-  subnet_ids = ["subnet-a5bcd2ce"]
+  vpc_id     = "${var.vpc_id}"
+  subnet_ids = ["${var.subnet_id}"]
 }
 
 module "aws-elasticsearch-cloudwatch-dashboard" {
@@ -27,7 +38,7 @@ module "aws-elasticsearch-cloudwatch-sns-alerting" {
   #   source = "./aws-elasticsearch-cloudwatch-sns-alerting"
 
   domain       = "${var.domain}"
-  alarms_email = "tethik@blacknode.se"
+  alarms_email = "${var.alarms_email}"
 }
 
 # Allow for any connections to the elasticsearch cluster to help make debugging easier.
@@ -49,4 +60,14 @@ resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
     ]
 }
 POLICIES
+}
+
+output "kibana_endpoint" {
+  depends_on = ["${module.aws-elasticsearch}"]
+  value      = "${module.aws-elasticsearch.kibana_endpoint}"
+}
+
+output "elasticsearch_endpoint" {
+  depends_on = ["${module.aws-elasticsearch.main}"]
+  value      = "${module.aws-elasticsearch.elasticsearch_endpoint}"
 }
