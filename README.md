@@ -1,21 +1,5 @@
 # terraform-aws-elasticsearch
 
-Task:
-
-```
-Search and monitor.
-
-You will have to create a Terraform module that deploys (preferably on AWS) and manages an ElasticSearch (ES) cluster.
-
-The ES cluster should be easily monitored and alerting should be possible.
-
-Everything should be documented thoroughly.
-
-Bonuses:
- - Easy way to display the data
- - Any other bonuses are welcome!
-```
-
 ## Testing
 
 The AWS documentation describes a good way to test that the cluster works from inside the VPC.
@@ -88,6 +72,10 @@ I still need to figure out how would this actually work in practice with Logstas
 I don't have much experience using ES long term, and most of my experience has been as a developer. I don't know
 which metrics are important to keep track of. Therefore I would have liked to invest more time into reading up on
 this, or asking someone more knowledgeable on hosting ES clusters as to what is important to keep track of.
+
+### Automated Testing
+
+This is code after all. We could code tests for it to e.g. try connecting to the cluster and logging some data, or ensuring that the cloudwatch alarm works. This would be helpful during development.
 
 ## TODO
 

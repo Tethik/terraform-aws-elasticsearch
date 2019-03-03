@@ -1,7 +1,12 @@
+variable "domain" {
+  type    = "string"
+  default = "example"
+}
+
 module "aws-elasticsearch" {
   source = "./aws-elasticsearch"
 
-  domain     = "example"
+  domain     = "${var.domain}"
   vpc_id     = "vpc-6071d40b"
   subnet_ids = ["subnet-a5bcd2ce"]
 }
@@ -9,19 +14,19 @@ module "aws-elasticsearch" {
 module "aws-elasticsearch-cloudwatch-dashboard" {
   source = "./aws-elasticsearch-cloudwatch-dashboard"
 
-  domain = "example"
+  domain = "${var.domain}"
 }
 
 module "aws-elasticsearch-cloudwatch-sns-alerting" {
   source = "./aws-elasticsearch-cloudwatch-sns-alerting"
 
-  domain       = "example"
+  domain       = "${var.domain}"
   alarms_email = "tethik@blacknode.se"
 }
 
 # Allow for any connections to the elasticsearch cluster to help make debugging easier.
 resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
-  domain_name = "${module.aws-elasticsearch.main.domain_name}"
+  domain_name = "${var.domain}"
 
   access_policies = <<POLICIES
 {
@@ -33,7 +38,7 @@ resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
               "AWS": "*"
             },
             "Effect": "Allow",            
-            "Resource": "${module.aws-elasticsearch.main.domain_name.arn}/*"
+            "Resource": "${module.aws-elasticsearch.elasticsearch_domain_arn}/*"
         }
     ]
 }
