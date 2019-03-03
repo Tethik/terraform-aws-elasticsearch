@@ -51,6 +51,14 @@ Use an instance inside the VPC as a proxy. E.g.
 ssh <user@ip> -N -L 9200:vpc-example-n2mczfaqfo25w65nd4afx23yim.eu-central-1.es.amazonaws.com:443
 ```
 
+## Monitoring
+
+Included is a CloudWatch dashboard with some minimal stats displayed. You'll find it on your AWS account under `CloudWatch -> Dashboards`.
+![A nice picture of the dashboard](./dashboard.png)
+
+By default the AWS ES domains publish metrics to CloudWatch. These can then be used elsewhere too.
+https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains.html#es-managedomains-cloudwatchmetrics
+
 ## Further Improvements
 
 These are some improvements I would make before considering this module production ready. In the interest of time
@@ -77,4 +85,11 @@ I still need to figure out how would this actually work in practice with Logstas
 
 ## Sources
 
+VPC ES setup
 https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#es-prerequisites-vpc-endpoints
+
+ES CloudWatch
+https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains.html#es-managedomains-cloudwatchmetrics
+
+Alerting + Monitoring
+https://stephenmann.io/post/setting-up-monitoring-and-alerting-on-amazon-aws-with-terraform/
