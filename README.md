@@ -1,6 +1,6 @@
 # terraform-aws-elasticsearch
 
-![version 0.1.0](version.svg)
+![version 0.1.1](version.svg)
 
 This is a terraform module to easily provision an AWS ElasticSearch domain inside a VPC for smaller clusters. It is structured into
 three separate modules.
@@ -16,7 +16,7 @@ Here's some code by example, just fill in the gaps.
 ```t
 module "aws-elasticsearch" {
   # Replace the version number at the end to use a newer (or older) version of the module.
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.1"
 
   domain     = "" # The domain name of the ES cluster
   vpc_id     = "" # The VPC to run the ES cluster inside. This will limit the access to only hosts inside that VPC.
@@ -28,13 +28,13 @@ module "aws-elasticsearch" {
 }
 
 module "aws-elasticsearch-cloudwatch-dashboard" {
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.1"
 
   domain = "" # The domain name of the ES cluster. Use the same as above.
 }
 
 module "aws-elasticsearch-cloudwatch-sns-alerting" {
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.1"
 
   domain       = "" # The domain name of the ES cluster. Use the same as above.
   alarms_email = "" # The email to send alarms to
