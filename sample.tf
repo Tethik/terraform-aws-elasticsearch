@@ -15,7 +15,7 @@ variable "alarms_email" {
 }
 
 module "aws-elasticsearch" {
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch?ref=0.1.1"
 
   #   source = "./aws-elasticsearch"
 
@@ -25,7 +25,7 @@ module "aws-elasticsearch" {
 }
 
 module "aws-elasticsearch-cloudwatch-dashboard" {
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-dashboard?ref=0.1.1"
 
   #   source = "./aws-elasticsearch-cloudwatch-dashboard"
 
@@ -33,7 +33,7 @@ module "aws-elasticsearch-cloudwatch-dashboard" {
 }
 
 module "aws-elasticsearch-cloudwatch-sns-alerting" {
-  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.0"
+  source = "git::git@github.com:Tethik/terraform-aws-elasticsearch.git//aws-elasticsearch-cloudwatch-sns-alerting?ref=0.1.1"
 
   #   source = "./aws-elasticsearch-cloudwatch-sns-alerting"
 
