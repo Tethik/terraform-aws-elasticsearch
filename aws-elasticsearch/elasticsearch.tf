@@ -52,24 +52,3 @@ resource "aws_elasticsearch_domain" "main" {
     "aws_iam_service_linked_role.es",
   ]
 }
-
-# TODO: move this out of the module.
-resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
-  domain_name = "${aws_elasticsearch_domain.main.domain_name}"
-
-  access_policies = <<POLICIES
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "es:*",
-            "Principal":  {
-              "AWS": "*"
-            },
-            "Effect": "Allow",            
-            "Resource": "${aws_elasticsearch_domain.main.arn}/*"
-        }
-    ]
-}
-POLICIES
-}

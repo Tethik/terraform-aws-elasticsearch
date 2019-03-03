@@ -18,3 +18,24 @@ module "aws-elasticsearch-cloudwatch-sns-alerting" {
   domain       = "example"
   alarms_email = "tethik@blacknode.se"
 }
+
+# Allow for any connections to the elasticsearch cluster to help make debugging easier.
+resource "aws_elasticsearch_domain_policy" "allow_anything_aws" {
+  domain_name = "${module.aws-elasticsearch.main.domain_name}"
+
+  access_policies = <<POLICIES
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "es:*",
+            "Principal":  {
+              "AWS": "*"
+            },
+            "Effect": "Allow",            
+            "Resource": "${module.aws-elasticsearch.main.domain_name.arn}/*"
+        }
+    ]
+}
+POLICIES
+}
