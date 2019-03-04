@@ -46,7 +46,7 @@ module "aws-elasticsearch-cloudwatch-sns-alerting" {
 In the top level of this repository I have provided a `sample.tf` file which showcases how to use these modules.
 Simply `terraform plan/apply` with your AWS credentials to try it out.
 
-By default the sample it will set the access policy to allow for anything coming from AWS (inside the VPC).
+By default the sample will set an [access policy](https://github.com/Tethik/terraform-aws-elasticsearch/blob/master/sample.tf#L45-L63) to allow for anything coming from AWS (inside the VPC).
 
 Use an EC2 instance inside the VPC as a proxy, using SSH to tunnel the connection. E.g.
 
