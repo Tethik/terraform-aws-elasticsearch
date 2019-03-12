@@ -1,9 +1,10 @@
+> ⚠️ This project was created as part of a technical test as part of a job interview. It has never ran in production, and my ability to support this project will be limited since I'm not currently using it myself.
+
 # terraform-aws-elasticsearch
 
 ![version 0.1.1](version.svg)
 
-This is a terraform module to easily provision an AWS ElasticSearch domain inside a VPC for smaller clusters. It is structured into
-three separate modules.
+This is a terraform module to easily provision an AWS ElasticSearch domain inside a VPC for smaller clusters. It is structured into three separate modules.
 
 - `aws-elasticsearch` is the main module which provisions the elasticsearch domain inside your VPC. This is the basic requirement.
 - `aws-elasticsearch-cloudwatch-dashboard` which adds a simple CloudWatch dashboard to your elasticsearch domain.
